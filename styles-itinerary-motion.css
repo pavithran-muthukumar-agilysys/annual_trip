@@ -1,0 +1,187 @@
+.itinerary-drift {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+  opacity: .82;
+}
+
+.itinerary-drift::before,
+.itinerary-drift::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 34px;
+  opacity: .22;
+  background: repeating-radial-gradient(ellipse at center, transparent 0 8px, var(--aqua) 9px 10px, transparent 11px 22px);
+  filter: blur(.2px);
+}
+
+.itinerary-drift::before {
+  left: 1.2%;
+  transform: rotate(9deg) scaleY(1.08);
+  animation: side-wave-left 9s ease-in-out infinite;
+}
+
+.itinerary-drift::after {
+  right: 1.2%;
+  transform: rotate(-9deg) scaleY(1.08);
+  animation: side-wave-right 11s ease-in-out infinite reverse;
+}
+
+.itinerary-section .section-heading,
+.itinerary-section .itinerary-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.surfboard {
+  position: absolute;
+  top: 12%;
+  left: 2.5%;
+  width: 25px;
+  height: 105px;
+  border-radius: 55% 45% 48% 52%;
+  background: var(--coral);
+  border: 3px solid var(--foam);
+  box-shadow: 0 5px 0 rgba(6, 63, 88, .13);
+  transform: rotate(24deg);
+  animation: surfboard-side-drift 30s ease-in-out infinite;
+}
+
+.surfboard::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  width: 4px;
+  height: 82px;
+  border-radius: 4px;
+  background: var(--sun);
+}
+
+.surfboard::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 42px;
+  height: 3px;
+  background: var(--aqua);
+  transform: rotate(-3deg);
+}
+
+.surfboard i {
+  position: absolute;
+  bottom: -9px;
+  left: 8px;
+  width: 9px;
+  height: 11px;
+  background: var(--ocean);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.surfboard i::after {
+  content: '';
+  position: absolute;
+  left: -14px;
+  bottom: -13px;
+  width: 40px;
+  height: 11px;
+  border-top: 2px solid var(--aqua);
+  border-radius: 50%;
+  opacity: .8;
+  animation: surf-ripple 2.4s ease-in-out infinite;
+}
+
+.sea-turtle {
+  position: absolute;
+  right: 2.5%;
+  top: 76%;
+  width: 62px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--leaf);
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, .12), 0 6px 0 rgba(6, 63, 88, .08);
+  transform: rotate(-90deg);
+  animation: turtle-side-glide 38s ease-in-out infinite;
+}
+
+.sea-turtle i {
+  position: absolute;
+  right: -12px;
+  top: 11px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: var(--leaf);
+}
+
+.sea-turtle i::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--foam);
+}
+
+.sea-turtle b {
+  position: absolute;
+  width: 22px;
+  height: 12px;
+  border-radius: 70% 30%;
+  background: #6cab78;
+}
+
+.sea-turtle b:nth-of-type(1) { left: -13px; top: 2px; transform: rotate(-32deg); }
+.sea-turtle b:nth-of-type(2) { left: -13px; bottom: 2px; transform: rotate(32deg); }
+.sea-turtle b:nth-of-type(3) { right: 5px; top: -7px; transform: rotate(36deg); }
+.sea-turtle b:nth-of-type(4) { right: 5px; bottom: -7px; transform: rotate(-36deg); }
+
+@keyframes surfboard-side-drift {
+  0% { top: -110px; transform: rotate(24deg) translateX(0); }
+  45% { transform: rotate(14deg) translateX(10px); }
+  100% { top: calc(100% + 110px); transform: rotate(25deg) translateX(-3px); }
+}
+
+@keyframes surf-ripple {
+  0%, 100% { transform: scaleX(.65); opacity: .35; }
+  50% { transform: scaleX(1.15); opacity: .9; }
+}
+
+@keyframes side-wave-left {
+  0%, 100% { background-position: 0 0; opacity: .14; }
+  50% { background-position: 8px 28px; opacity: .28; }
+}
+
+@keyframes side-wave-right {
+  0%, 100% { background-position: 0 20px; opacity: .14; }
+  50% { background-position: -8px -18px; opacity: .28; }
+}
+
+@keyframes turtle-side-glide {
+  0% { top: calc(100% + 80px); transform: rotate(-90deg) translateX(0); }
+  48% { transform: rotate(-84deg) translateX(-10px); }
+  100% { top: -80px; transform: rotate(-90deg) translateX(3px); }
+}
+
+@media (max-width: 800px) {
+  .itinerary-drift::before,
+  .itinerary-drift::after { width: 22px; opacity: .16; }
+  .surfboard { left: 3%; transform: scale(.78) rotate(24deg); animation-duration: 36s; }
+  .sea-turtle { right: 3%; transform: scale(.78) rotate(-90deg); animation-duration: 46s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .itinerary-drift::before,
+  .itinerary-drift::after { animation: none; opacity: .12; }
+  .surfboard,
+  .sea-turtle { animation: none; }
+  .surfboard { left: 3%; top: 12%; transform: rotate(24deg); }
+  .sea-turtle { right: 3%; top: 76%; transform: rotate(-90deg); }
+}
