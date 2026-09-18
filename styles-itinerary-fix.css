@@ -1,0 +1,2 @@
+.activity-list li{grid-template-columns:90px minmax(0,1fr);column-gap:10px}.activity-list strong,.activity-list small{min-width:0}.activity-list strong{line-height:1.35}.activity-list small{line-height:1.35}.time{white-space:nowrap}
+@media(max-width:800px){.activity-list li{grid-template-columns:88px minmax(0,1fr);column-gap:8px}}

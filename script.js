@@ -53,3 +53,38 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 
 document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+
+const header = document.querySelector('.site-header');
+let ticking = false;
+function updateScrollState() {
+  const scrollY = window.scrollY;
+  header.classList.toggle('scrolled', scrollY > 24);
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && scrollY < window.innerHeight) {
+    document.documentElement.style.setProperty('--parallax', `${scrollY * 0.35}px`);
+    document.querySelector('.hero-copy').style.opacity = String(Math.max(0.35, 1 - scrollY / (window.innerHeight * 0.9)));
+  }
+  ticking = false;
+}
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    window.requestAnimationFrame(updateScrollState);
+    ticking = true;
+  }
+}, { passive: true });
+updateScrollState();
+
+if (window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.experience-card, .gallery-tile, .photo-frame').forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      const bounds = card.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 3;
+      const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * -3;
+      card.style.setProperty('--tilt-x', `${x}deg`);
+      card.style.setProperty('--tilt-y', `${y}deg`);
+      card.style.transform = `perspective(700px) rotateX(${y}deg) rotateY(${x}deg) translateY(-5px)`;
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.transform = '';
+    });
+  });
+}
